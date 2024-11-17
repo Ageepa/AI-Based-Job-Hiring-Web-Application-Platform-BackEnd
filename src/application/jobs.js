@@ -1,6 +1,6 @@
 import NotFoundError from "../domain/errors/not-found-error.js";
 import ValidationError from "../domain/errors/validation-error.js";
-import Job from "../persistance/entities/jobs.js";
+import Job from "../persistance/Entities/jobs.js";
 import { JobDTO } from "./dto/jobs.js";
 
 export const getAllJobs = async (req, res, next) => {
