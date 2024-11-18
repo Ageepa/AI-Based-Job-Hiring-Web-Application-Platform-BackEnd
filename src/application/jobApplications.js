@@ -1,5 +1,5 @@
 import ValidationError from "../domain/errors/validation-error.js";
-import JobApplication from "../persistance/entities/jobApplications.js";
+import JobApplication from "../persistance/Entities/jobApplications.js";
 import { JobApplicationDTO } from "./dto/jopApplications.js";
 
 export const getAllJobApplications = async (req, res, next) => {
@@ -38,14 +38,15 @@ export const createJobApplication = async (req, res, next) => {
 
     const createdJobApplication = await JobApplication.create({ ...jobApplication.data, userId: userId });
     //to generate rating
-    //const rating = generateRating(createdJobApplication)
-
-    
-    
-
+    const rating = generateRating(createdJobApplication);
+    if (rating) {
+      await JobApplication.findOneAndUpdate({ _id: createdJobApplication._id }, { rating: rating });
+    }
+   
     return res.status(201).send();
+
   } catch (error) {
-    next(error);
+      next(error);
   }
 };
 
